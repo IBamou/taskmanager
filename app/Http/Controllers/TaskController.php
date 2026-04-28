@@ -2,64 +2,70 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Task;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Category $category)
     {
-        //
+        return view('categories.tasks.create', compact('category'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, Category $category)
     {
-        //
-    }
+        $validation = $request->validate([
+            'title' => 'required|string',
+            'description' => 'nullable|string',
+            'due_date' => 'nullable|date',
+            'status' => 'required|in:pending,in-progress,completed',
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Task $task)
-    {
-        //
+        $category->tasks()->create($validation);
+
+        return redirect()->route('categories.show', $category);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Task $task)
+    public function edit(Category $category, Task $task)
     {
-        //
+        return view('categories.tasks.edit', compact('category', 'task'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Task $task)
+    public function update(Request $request, Category $category, Task $task)
     {
-        //
+        $validation = $request->validate([
+            'title' => 'required|string',
+            'description' => 'nullable|string',
+            'due_date' => 'nullable|date',
+            'status' => 'required|in:pending,in-progress,completed',
+        ]);
+
+        $task->update($validation);
+
+        return redirect()->route('categories.show', $category);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Task $task)
+    public function destroy(Category $category, Task $task)
     {
-        //
+        $task->delete();
+
+        return redirect()->route('categories.show', $category);
     }
 }
