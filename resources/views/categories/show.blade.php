@@ -40,15 +40,15 @@
             @else
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     @foreach($tasks as $task)
-                        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg hover:shadow-lg transition-all duration-300 border-l-4 border-{{ $task->status === 'completed' ? 'green' : ($task->status === 'in-progress' ? 'yellow' : 'gray') }}-500">
+                        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg hover:shadow-lg transition-all duration-300 border-l-4 border-{{ $task->status === 'done' ? 'green' : ($task->status === 'in_progress' ? 'yellow' : 'gray') }}-500">
                             <div class="p-6">
                                 <div class="flex items-start justify-between mb-3">
                                     <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{ $task->title }}</h3>
                                     <span class="px-2 py-1 text-xs font-medium rounded-full 
-                                        @if($task->status === 'completed') bg-green-100 text-green-800
-                                        @elseif($task->status === 'in-progress') bg-yellow-100 text-yellow-800
+                                        @if($task->status === 'done') bg-green-100 text-green-800
+                                        @elseif($task->status === 'in_progress') bg-yellow-100 text-yellow-800
                                         @else bg-gray-100 text-gray-800 @endif">
-                                        {{ ucfirst(str_replace('-', ' ', $task->status)) }}
+                                        {{ ucfirst(str_replace('_', ' ', $task->status)) }}
                                     </span>
                                 </div>
                                 
@@ -65,17 +65,10 @@
                                     </div>
                                 @endif
 
-                                <div class="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-700">
-                                    <a href="{{ route('categories.task.edit', [$category, $task]) }}" class="text-indigo-600 hover:text-indigo-800 text-sm font-medium">
-                                        Edit
+                                <div class="pt-4 border-t border-gray-200 dark:border-gray-700">
+                                    <a href="{{ route('categories.task.show', [$category, $task]) }}" class="text-indigo-600 hover:text-indigo-800 text-sm font-medium">
+                                        View Details →
                                     </a>
-                                    <form action="{{ route('categories.task.delete', [$category, $task]) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="text-red-600 hover:text-red-800 text-sm font-medium" onclick="return confirm('Delete this task?')">
-                                            Delete
-                                        </button>
-                                    </form>
                                 </div>
                             </div>
                         </div>

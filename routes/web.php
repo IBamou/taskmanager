@@ -31,6 +31,7 @@ Route::middleware('auth')->group(function () {
     Route::controller(TaskController::class)->prefix('categories')->group(function () {
         Route::get('{category}/create', 'create')->name('categories.task.create');
         Route::post('{category}/store', 'store')->name('categories.task.store');
+        Route::get('/{category}/{task}', 'show')->name('categories.task.show');
         Route::get('/{category}/{task}/edit', 'edit')->name('categories.task.edit');
         Route::put('/{category}/{task}/update', 'update')->name('categories.task.update');
         Route::delete('/{category}/{task}/delete', 'destroy')->name('categories.task.delete');

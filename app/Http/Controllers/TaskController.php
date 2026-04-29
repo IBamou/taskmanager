@@ -26,7 +26,7 @@ class TaskController extends Controller
             'title' => 'required|string',
             'description' => 'nullable|string',
             'due_date' => 'nullable|date',
-            'status' => 'required|in:pending,in-progress,completed',
+            'status' => 'required|in:pending,in_progress,done',
         ]);
 
         $validation['user_id'] = auth()->id();
@@ -34,6 +34,14 @@ class TaskController extends Controller
         $category->tasks()->create($validation);
 
         return redirect()->route('categories.show', $category);
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Category $category, Task $task)
+    {
+        return view('categories.tasks.show', compact('category', 'task'));
     }
 
     /**
@@ -53,7 +61,7 @@ class TaskController extends Controller
             'title' => 'required|string',
             'description' => 'nullable|string',
             'due_date' => 'nullable|date',
-            'status' => 'required|in:pending,in-progress,completed',
+            'status' => 'required|in:pending,in_progress,done',
         ]);
 
         $task->update($validation);

@@ -41,8 +41,8 @@
                                 <x-input-label for="status" :value="__('Status')" class="text-lg font-medium mb-2" />
                                 <select id="status" name="status" class="w-full px-4 py-3 border-gray-300 dark:border-gray-700 dark:bg-gray-900 rounded-lg focus:ring-2 focus:ring-emerald-500" required>
                                     <option value="pending">Pending</option>
-                                    <option value="in-progress">In Progress</option>
-                                    <option value="completed">Completed</option>
+                                    <option value="in_progress">In Progress</option>
+                                    <option value="done">Done</option>
                                 </select>
                                 <x-input-error class="mt-2" :messages="$errors->get('status')" />
                             </div>
