@@ -29,6 +29,8 @@ class TaskController extends Controller
             'status' => 'required|in:pending,in-progress,completed',
         ]);
 
+        $validation['user_id'] = auth()->id();
+
         $category->tasks()->create($validation);
 
         return redirect()->route('categories.show', $category);
